@@ -27,11 +27,7 @@
     <div class="main-wrap">
       <header class="header">
         <div class="header-spacer"></div>
-        <button
-          type="button"
-          class="logout-btn"
-          @click="logout"
-        >
+        <button type="button" class="logout-btn" @click="logout">
           <span class="arrow-icon">→</span>
         </button>
       </header>
@@ -50,7 +46,7 @@ const page = usePage();
 const url = computed(() => page.url);
 
 function logout() {
-  router.post('/logout');
+  router.post('/logout', {}, { preserveState: false });
 }
 </script>
 

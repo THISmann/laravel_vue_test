@@ -3,8 +3,9 @@
     <div class="auth-card">
       <h1>Вход</h1>
       <p v-if="flash?.error" class="error flash-error">{{ flash.error }}</p>
+      <p v-if="flash?.status" class="success flash-success">{{ flash.status }}</p>
       <div v-if="hasErrors" class="error-summary" role="alert">
-        <strong>Veuillez corriger les erreurs ci-dessous.</strong>
+        <strong> Error .</strong>
       </div>
       <form @submit.prevent="submit" novalidate>
         <div class="form-group">
@@ -46,7 +47,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
 const flash = usePage().props.flash;
@@ -58,6 +59,24 @@ const form = useForm({
 
 const hasErrors = computed(() => form.errors && Object.keys(form.errors).length > 0);
 
+// log of errors and flash messages for debugging purposes
+watch(
+  () => form.errors,
+  (errors) => {
+    if (errors && Object.keys(errors).length > 0) {
+      console.log('[Login]  validation failed:', errors);
+    }
+  },
+  { deep: true }
+);
+
+watch(
+  () => flash?.error,
+  (msg) => {
+    if (msg) console.log('[Login] Message flash (erreur):', msg);
+  }
+);
+
 function errorText(field) {
   const e = form.errors[field];
   if (e == null) return '';
@@ -65,8 +84,13 @@ function errorText(field) {
 }
 
 function submit() {
+  console.log('[Login] Send Form ...', { email: form.email });
   form.post('/login', {
     onFinish: () => form.reset('password'),
+    onSuccess: () => console.log('[Login] successfull connexion .'),
+    onError: (errors) => {
+      console.error('[Login] Error in the connexion process:', errors);
+    },
   });
 }
 </script>

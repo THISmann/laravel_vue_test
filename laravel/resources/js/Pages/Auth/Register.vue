@@ -3,7 +3,7 @@
     <div class="auth-card">
       <h1>Регистрация</h1>
       <div v-if="hasErrors" class="error-summary" role="alert">
-        <strong>Veuillez corriger les erreurs ci-dessous.</strong>
+        <strong> Error.</strong>
       </div>
       <form @submit.prevent="submit" novalidate>
         <div class="form-group">
@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
@@ -83,6 +83,17 @@ const form = useForm({
 
 const hasErrors = computed(() => form.errors && Object.keys(form.errors).length > 0);
 
+// log of errors for debugging purposes
+watch(
+  () => form.errors,
+  (errors) => {
+    if (errors && Object.keys(errors).length > 0) {
+      console.log('[Register] Erreurs de validation:', errors);
+    }
+  },
+  { deep: true }
+);
+
 function errorText(field) {
   const e = form.errors[field];
   if (e == null) return '';
@@ -90,8 +101,13 @@ function errorText(field) {
 }
 
 function submit() {
+  console.log('[Register] Envoi du formulaire...', { email: form.email, name: form.name });
   form.post('/register', {
     onFinish: () => form.reset('password', 'password_confirmation'),
+    onSuccess: () => console.log('[Register] Inscription réussie.'),
+    onError: (errors) => {
+      console.error('[Register] Erreur lors de l\'inscription:', errors);
+    },
   });
 }
 </script>

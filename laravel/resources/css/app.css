@@ -115,6 +115,14 @@ input, textarea {
     border-radius: var(--radius-sm);
 }
 
+.flash-success {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: #f0fdf4;
+    border-radius: var(--radius-sm);
+    color: #166534;
+}
+
 .error-summary {
     margin-bottom: 1rem;
     padding: 0.75rem 1rem;
