@@ -6,96 +6,44 @@ Laravel + Vue 3 + Inertia.js application.
 
 ---
 
-## How to run the project / Как запустить проект
+##  Как запустить проект
 
-### English
+### **Установить зависимости PHP**
 
-1. **Install PHP dependencies**
-   ```bash
+1. ```bash
    composer install
    ```
-
-2. **Configure environment**
-   - Copy `.env.example` to `.env` if needed.
-   - Set `APP_URL=http://127.0.0.1:8000` (use this URL to avoid session issues).
-   - Generate key: `php artisan key:generate`.
-
-3. **Database (SQLite)**
-   ```bash
-   touch database/database.sqlite
-   php artisan migrate
-   ```
-
-4. **Install frontend dependencies and build**
-   ```bash
-   npm install
-   npm run dev
-   ```
-   Keep this terminal open (Vite dev server).
-
-5. **Start Laravel**
-   In another terminal:
-   ```bash
-   php artisan serve
-   ```
-
-6. **Open the app**  
-   Go to **http://127.0.0.1:8000** in your browser (use this URL, not `localhost`).
-
----
-
-### Русский
-
-1. **Установить зависимости PHP**
-   ```bash
-   composer install
-   ```
-
 2. **Настроить окружение**
+
    - Скопировать `.env.example` в `.env`, если файла нет.
    - Указать `APP_URL=http://127.0.0.1:8000` (этот URL избегает проблем с сессией).
    - Сгенерировать ключ: `php artisan key:generate`.
-
 3. **База данных (SQLite)**
+
    ```bash
    touch database/database.sqlite
    php artisan migrate
    ```
-
 4. **Установить зависимости фронтенда и запустить сборку**
+
    ```bash
    npm install
    npm run dev
    ```
-   Оставьте этот терминал открытым (сервер Vite).
 
+   Оставьте этот терминал открытым (сервер Vite).
 5. **Запустить Laravel**
    В другом терминале:
+
    ```bash
    php artisan serve
    ```
-
-6. **Открыть приложение**  
+6. **Открыть приложение**
    В браузере перейдите по адресу **http://127.0.0.1:8000** (используйте этот URL, не `localhost`).
 
 ---
 
 ## Docker / Докер
-
-### English
-
-Build and run with Docker Compose (no local PHP/Node required):
-
-```bash
-docker compose build
-docker compose up -d
-```
-
-Then open **http://localhost:8000**. The entrypoint creates the SQLite DB and runs migrations; `APP_KEY` is generated on first run if not set.
-
-Stop: `docker compose down`.
-
-### Русский
 
 Сборка и запуск через Docker Compose (без установки PHP/Node локально):
 
