@@ -1,7 +1,11 @@
 #!/bin/sh
 set -e
 cd /var/www/html
-# Generate APP_KEY if not set (e.g. when using only .env.example)
+# Create .env from .env.example if missing (e.g. in Docker .env is not in the image)
+if [ ! -f .env ]; then
+    cp .env.example .env
+fi
+# Generate APP_KEY if not set
 if [ -z "$APP_KEY" ] || [ "$APP_KEY" = "base64:" ]; then
     php artisan key:generate --no-interaction --force
 fi
